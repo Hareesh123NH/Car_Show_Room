@@ -22,7 +22,7 @@ public class CarController {
 
     @GetMapping("/")
     public String home(){
-        return "index";
+        return "home";
     }
 
     @GetMapping("/car_register")
