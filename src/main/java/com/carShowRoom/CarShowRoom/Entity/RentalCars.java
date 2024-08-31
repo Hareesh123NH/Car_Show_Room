@@ -2,6 +2,8 @@ package com.carShowRoom.CarShowRoom.Entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class RentalCars {
@@ -14,11 +16,15 @@ public class RentalCars {
     private String color;
     private double price;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public RentalCars() {
         super();
     }
 
-    public RentalCars(int id, String name, String company, String model, String color, double price) {
+    public RentalCars(int id, String name, String company, String model, String color, double price, User user) {
         super();
         this.id = id;
         this.name = name;
@@ -26,6 +32,7 @@ public class RentalCars {
         this.model = model;
         this.color = color;
         this.price = price;
+        this.user = user;
     }
 
     public int getId() {
@@ -75,5 +82,12 @@ public class RentalCars {
     public void setPrice(double price) {
         this.price = price;
     }
-}
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+}

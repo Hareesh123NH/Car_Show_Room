@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -8,51 +8,59 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>CarShow</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Home Page</title>
     <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
         .background-image {
-            background-image: url('/images/home.jpeg');
-            height: 100%;
+            background-image: url('/images/rental_car.jpg'); /* Replace with your background image path */
+            height: 100vh;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
             position: relative;
-        }
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .content {
-            position: relative;
-            color: white;
+            background: rgba(0, 0, 0, 0.7); /* Semi-transparent background for better text readability */
+            padding: 30px;
+            border-radius: 10px;
             text-align: center;
-            padding: 20px;
-            top: 50%;
-            transform: translateY(-50%);
+            max-width: 90%;
+            width: 100%;
         }
         h1 {
-            font-size: 50px;
-            font-weight: bold;
-            margin: 0;
-            text-shadow: 2px 2px 4px #000000; /* Shadow effect for text */
+            margin-bottom: 20px;
+            font-size: 2.5rem;
         }
         p {
-            font-size: 20px;
-            line-height: 1.5;
-            text-shadow: 1px 1px 2px #000000; /* Shadow effect for text */
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .btn-custom:active {
+            transform: scale(0.98);
         }
     </style>
 </head>
 <body>
+<!-- Bootstrap JS and dependencies -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
@@ -62,9 +70,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
-<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand text-white" href="#"><img src="/images/car_logo.webp" alt="" width="30" height="24" class="d-inline-block align-text-top">CarShowRoom</a>
+        <div class="navbar-brand" href="#">
+            <img src="/images/car_logo.webp" alt="" width="30" height="24"
+                 class="d-inline-block align-text-top"> CarShowRoom
+        </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -72,27 +84,47 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active text-white" aria-current="page" href="/">Home</a>
+                    <a class="nav-link active" aria-current="page" href="/home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="available_cars">AvailableCars</a>
+                    <a class="nav-link" href="/profile">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="rental_cars">RentedCars</a>
+                    <a class="nav-link text-blue" href="/available_cars">Available Cars</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/rental_cars">Rented Cars</a>
                 </li>
             </ul>
-            <div>
-                <a class="nav-link text-white" href="car_register">New Car Register</a>
-            </div>
+            <a class="nav-link" href="/car_register">New Car Register</a>
         </div>
     </div>
 </nav>
 
 <div class="background-image">
-    <div class="overlay"></div>
+
+
     <div class="content">
-        <h1>WELCOME TO CAR SHOW ROOM</h1>
-        <p>Imagine a sleek, modern car showroom designed to impress both car enthusiasts and potential buyers. The showroom features a spacious, open-concept layout with large floor-to-ceiling windows that allow natural light to flood the space, highlighting the cars on display. The floor is made of polished marble, reflecting the vehicles' glossy finishes. Upon entering, visitors are greeted by a reception desk made of glass and stainless steel, where friendly staff members offer assistance. The showroom is divided into different sections, each dedicated to a specific car brand or type, such as luxury sedans, sports cars, SUVs, and electric vehicles.</p>
+
+        <h1>Welcome Back, <span th:text="${username}"></span>!</h1>
+        <p>This is your home page where you can manage your profile and settings.</p>
+        <li><strong>Manage Cars:</strong> View and update your existing car listings. Make changes to car details, check
+            availability, and ensure your inventory is up-to-date.
+        </li>
+        <li><strong>View Cars:</strong> Browse through the list of available cars in your inventory. Check the details
+            of each car, including make, model, year, and rental status.
+        </li>
+        <li><strong>Register New Cars:</strong> Add new cars to your inventory. Enter details such as make, model, year,
+            and other specifications to ensure your listings are complete and accurate.
+        </li>
+        <li><strong>Remove Cars:</strong> Remove cars from your inventory that are no longer available or need to be
+            updated. This option helps keep your database clean and current.
+        </li>
+        <li><strong>Add to Rental:</strong> Manage car rentals by adding cars to the rental system. Set availability and
+            rental terms to ensure efficient management of your fleet.
+        </li>
+
+
     </div>
 </div>
 </body>

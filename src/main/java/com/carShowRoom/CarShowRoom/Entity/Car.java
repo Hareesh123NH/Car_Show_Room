@@ -1,33 +1,34 @@
 package com.carShowRoom.CarShowRoom.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  int id;
+    private Integer id;
     private String name;
     private String company;
     private String model;
     private String color;
     private double price;
 
-    public Car(int id, String name, String company, String model, String color, double price) {
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Car() {
+    }
+
+    public Car(int id, String name, String company, String model, String color, double price, User user) {
         this.id = id;
         this.name = name;
         this.company = company;
         this.model = model;
         this.color = color;
         this.price = price;
-    }
-
-    public Car() {
-        super();
+        this.user = user;
     }
 
     public int getId() {
@@ -55,11 +56,11 @@ public class Car {
     }
 
     public String getModel() {
-        return this.model;
+        return model;
     }
 
     public void setModel(String model) {
-        this.model= model;
+        this.model = model;
     }
 
     public String getColor() {
@@ -77,4 +78,13 @@ public class Car {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #007bff;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-header img:hover {
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+
+        .profile-header h1 {
+            font-size: 26px;
+            margin: 0;
+            color: #333;
+        }
+
+        .profile-header p {
+            color: #777;
+            font-size: 16px;
+        }
+
+        .profile-info {
+            margin-top: 20px;
+        }
+
+        .profile-info h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .edit-profile-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 25px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .logout-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color:#d9534f;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 25px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .edit-profile-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            color:black;
+        }
+        .logout-btn:hover {
+            background-color: #c9302c; /* Darker red on hover */
+            transform: translateY(-2px);
+              color:black;
+        }
+    </style>
+</head>
+
+<body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div class="navbar-brand" href="#">
+            <img src="/images/car_logo.webp" alt="" width="30" height="24"
+                 class="d-inline-block align-text-top"> CarShowRoom
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link " href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/profile">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/available_cars">Available Cars</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/rental_cars">Rented Cars</a>
+                </li>
+            </ul>
+            <div class="nav-item">
+                <a class="nav-link" href="/car_register">New Car Register</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="profile-container">
+    <div class="profile-header">
+        <img th:src="@{/profile/image/{userId}(userId=${user.id})}" alt="User Profile Picture" id="profile-picture">
+        <h1 th:text="${user.username}"></h1>
+        <p th:text="${user.email}"></p>
+    </div>
+
+    <div class="profile-info">
+        <h3><strong>Profile Information</strong></h3>
+        <ul>
+            <li><strong>Full Name:</strong> <span th:text="${user.username}"></span></li>
+            <li><strong>Email:</strong> <span th:text="${user.email}"></span></li>
+            <li><strong>Username:</strong> <span th:text="${user.username}"></span></li>
+            <li><strong>Phone:</strong> <span th:text="${user.phone}"></span></li>
+            <li><strong>Address:</strong> <span th:text="${user.address}"></span></li>
+            <!-- Add more fields as needed -->
+        </ul>
+    </div>
+
+    <!--    <a href="#" class="edit-profile-btn">Edit Profile</a>-->
+    <!--    <a th="@{/logout}" onclick="return confirm('Are you sure you want to Logout?');"-->
+    <!--       class="logout-btn">Logout</a>-->
+    <form th:action="@{/logout}" method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <button type="submit" class="logout-btn">Logout</button>
+    </form>
+
+</div>
+
+</body>
+
+</html>

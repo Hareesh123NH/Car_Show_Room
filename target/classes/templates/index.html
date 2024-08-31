@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CarShowRoom</title>
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .background-image {
+            background-image: url('/images/index.jpg');
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+        }
+        .content {
+            position: relative;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        h1 {
+            font-size: 50px;
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 2px 2px 4px #000000; /* Shadow effect for text */
+        }
+        p {
+            font-size: 20px;
+            line-height: 1.5;
+            text-shadow: 1px 1px 2px #000000; /* Shadow effect for text */
+        }
+          a {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        a:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    window.addEventListener("beforeunload", function (event) {
+        navigator.sendBeacon('/logout');
+    });
+</script>
+<div class="background-image">
+    <div class="overlay"></div>
+    <div class="content">
+        <h1>WELCOME TO CAR SHOW ROOM</h1>
+
+        <p>Imagine a sleek, modern car showroom designed to impress both car enthusiasts and potential buyers. The
+            showroom features a spacious, open-concept layout with large floor-to-ceiling windows that allow natural
+            light to flood the space, highlighting the cars on display. The floor is made of polished marble, reflecting
+            the vehicles' glossy finishes. Upon entering, visitors are greeted by a reception desk made of glass and
+            stainless steel, where friendly staff members offer assistance. The showroom is divided into different
+            sections, each dedicated to a specific car brand or type, such as luxury sedans, sports cars, SUVs, and
+            electric vehicles.</p>
+        <a href="/login">Go to Login Page</a>
+    </div>
+
+</div>
+</body>
+</html>
