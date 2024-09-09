@@ -13,12 +13,22 @@ public class Car {
     private String model;
     private String color;
     private double price;
+    @Lob
+    private byte[] image;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     public Car() {
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public Car(int id, String name, String company, String model, String color, double price, User user) {

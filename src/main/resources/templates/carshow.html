@@ -120,10 +120,10 @@
                     <a class="nav-link" href="/profile">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/available_cars">Available Cars</a>
+                    <a class="nav-link active" aria-current="page" href="/available_cars">Available Cars</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/rental_cars">Rented Cars</a>
+                    <a class="nav-link" href="/rental_cars">Rented Cars</a>
                 </li>
             </ul>
             <div class="nav-item">
@@ -132,25 +132,16 @@
         </div>
     </div>
 </nav>
-<h1>Rental Cars</h1>
+<h1>Available Cars</h1>
 <div class="search-container">
-    <form th:action="@{/rental_cars}" method="get">
+    <form th:action="@{/available_cars}" method="get">
         <input type="text" id="searchInput" name="search" class="search-input" placeholder="Search cars...">
         <button type="submit">Search</button>
     </form>
 </div>
-<!--<div class="search-container">-->
-<!--    <form th:action="@{/available_cars}" method="get">-->
-<!--        <input type="text" name="name" class="search-input" placeholder="Search by name...">-->
-<!--        <input type="text" name="company" class="search-input" placeholder="Search by company...">-->
-<!--        <input type="text" name="color" class="search-input" placeholder="Search by color...">-->
-<!--        &lt;!&ndash;        <input type="number" name="price" class="search-input" placeholder="Search by price...">&ndash;&gt;-->
-<!--        <button type="submit">Search</button>-->
-<!--    </form>-->
-<!--</div>-->
+
 <div class="container">
     <!-- Loop through cars using Thymeleaf -->
-
     <th:block th:if="${#lists.isEmpty(cars)}">
         <h3>No cars found for the given search text.</h3>
     </th:block>
@@ -168,9 +159,10 @@
                 <p>Color: <span th:text="${car.color}">Color</span></p>
                 <p>Price:$ <span th:text="${car.price}">Price</span></p>
                 <div class="actions">
+                    <a class="rent-a" th:href="@{/rental_cars/{id}(id=${car.id})}">AddToRental</a>
                     <a class="delete-a"
                        onclick="return confirm('Are you sure you want to remove this car?');"
-                       th:href="@{/delete_rental/{id}(id=${car.id})}">RemoveFromRental</a>
+                       th:href="@{/delete_car/{id}(id=${car.id})}">RemoveCar</a>
                 </div>
             </div>
         </div>

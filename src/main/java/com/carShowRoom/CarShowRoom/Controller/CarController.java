@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -31,12 +32,19 @@ public class CarController {
     private UserService userService;
 
     @GetMapping("/rental_cars")
-    public ModelAndView getRentalCars(Authentication authentication) {
+    public ModelAndView getRentalCars(@RequestParam(value = "search", required = false) String search, Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String username = userDetails.getUsername();
         User user = userService.findUserByName(username);
         long id = user.getId();
-        List<RentalCars> list = rentalService.findByUserId(id);
+
+        List<RentalCars> list;
+        if (search != null && !search.isEmpty()) {
+            list = rentalService.findByUserIdAndNameContainingIgnoreCase(id, search);
+        } else {
+            list = rentalService.findByUserId(id);
+        }
+//        List<RentalCars> list = rentalService.findByUserId(id);
         ModelAndView m = new ModelAndView("rentalCars");
         m.addObject("cars", list);
         return m;

@@ -16,8 +16,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
@@ -67,16 +69,46 @@ public class UserController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
 
+    @GetMapping("/car/image/{id}")
+    @ResponseBody
+    public ResponseEntity<byte[]> getCarProfileImage(@PathVariable("id") int carId) {
+        Car car = carService.getCarById(carId);
+        byte[] image = car.getImage();
+
+        if (image == null) {
+            // Return a default image if the user doesn't have one
+            System.out.println("No Image Found");
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
+    }
+
+
     @GetMapping("/available_cars")
-    public ModelAndView getAllCars(Authentication authentication) {
+    public ModelAndView getAllCars(@RequestParam(value = "search", required = false) String search, Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String username = userDetails.getUsername();
         User user = userService.findUserByName(username);
         long id = user.getId();
-        List<CarDto> list = carService.findByUserId(id);
-        ModelAndView m = new ModelAndView("carList");
+
+        List<CarDto> list;
+        if (search != null && !search.isEmpty()) {
+            list = carService.findByUserIdAndNameContainingIgnoreCase(id, search);
+
+        } else {
+            list = carService.findByUserId(id);
+        }
+
+//        List<CarDto> list = carService.findByUserId(id);
+        ModelAndView m = new ModelAndView("carshow");
         m.addObject("cars", list);
         return m;
+    }
+
+    @GetMapping("/startwith-A")
+    public List<Car> getCarsstartwithA() {
+        return carService.getCarsStartWithA();
     }
 
     @GetMapping("/car_register")
@@ -85,7 +117,7 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public String addCar(@ModelAttribute("Car") Car car, Authentication authentication) {
+    public String addCar(@ModelAttribute("CarDto") CarDto carDto, Authentication authentication) {
         // Fetch the authenticated user from the Authentication object
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = userService.findUserByName(userDetails.getUsername());
@@ -94,11 +126,27 @@ public class UserController {
             throw new RuntimeException("Authenticated user not found in database.");
         }
 
+        Car car = new Car();
+        car.setName(carDto.getName());
+        car.setCompany(carDto.getCompany());
+        car.setModel(carDto.getModel());
         car.setUser(user);
+        car.setColor(carDto.getColor());
+        car.setPrice(carDto.getPrice());
+
+        MultipartFile profileImage = carDto.getProfileImage();
+        if (profileImage != null && !profileImage.isEmpty()) {
+            try {
+                car.setImage(profileImage.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+                // Handle the error appropriately
+            }
+        }
 
         carService.saveCar(car);
 
         return "redirect:/available_cars"; // Redirecting to a list page after adding the car
     }
-    
+
 }

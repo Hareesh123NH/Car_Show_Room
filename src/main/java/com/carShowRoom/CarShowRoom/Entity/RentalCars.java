@@ -1,9 +1,6 @@
 package com.carShowRoom.CarShowRoom.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class RentalCars {
@@ -15,6 +12,8 @@ public class RentalCars {
     private String model;
     private String color;
     private double price;
+    @Lob
+    private byte[] image;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -174,15 +174,15 @@
             <li><strong>Username:</strong> <span th:text="${user.username}"></span></li>
             <li><strong>Phone:</strong> <span th:text="${user.phone}"></span></li>
             <li><strong>Address:</strong> <span th:text="${user.address}"></span></li>
-            <!-- Add more fields as needed -->
+            <!--             Add more fields as needed -->
         </ul>
     </div>
 
-    <!--    <a href="#" class="edit-profile-btn">Edit Profile</a>-->
-    <!--    <a th="@{/logout}" onclick="return confirm('Are you sure you want to Logout?');"-->
+<!--    <a href="#" class="edit-profile-btn">Edit Profile</a>-->
+    <!--    <a th:href="@{/?logout=true}" onclick="return confirm('Are you sure you want to Logout?');"-->
     <!--       class="logout-btn">Logout</a>-->
     <form th:action="@{/logout}" method="post">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <!--        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
         <button type="submit" class="logout-btn">Logout</button>
     </form>
 

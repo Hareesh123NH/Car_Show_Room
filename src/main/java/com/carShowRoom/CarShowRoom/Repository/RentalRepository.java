@@ -1,5 +1,6 @@
 package com.carShowRoom.CarShowRoom.Repository;
 
+import com.carShowRoom.CarShowRoom.Entity.Car;
 import com.carShowRoom.CarShowRoom.Entity.RentalCars;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,4 +11,7 @@ import java.util.List;
 public interface RentalRepository extends JpaRepository<RentalCars, Integer> {
 
     List<RentalCars> findByUserId(long id);
+
+    List<RentalCars> findByUserIdAndNameContainingIgnoreCase(long userId, String search);
+
 }

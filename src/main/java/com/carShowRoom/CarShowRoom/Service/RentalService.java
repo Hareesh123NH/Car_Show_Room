@@ -26,6 +26,10 @@ public class RentalService {
         return rentalRepository.findByUserId(userId);
     }
 
+    public List<RentalCars> findByUserIdAndNameContainingIgnoreCase(Long id,String search){
+        return rentalRepository.findByUserIdAndNameContainingIgnoreCase(id,search);
+    }
+
     public void deleteById(int id) {
         rentalRepository.deleteById(id);
     }
